@@ -3,14 +3,14 @@ const app = express();
 
 const port = 8000;
 
-
-let Data = [];
-
 app.use(express.urlencoded());
 
 
 app.set('view engine', 'ejs');
 
+let Data = [];
+
+// for connect pages and path
 
 app.get('/', (req, res) => {
     return res.render('table', {
@@ -21,6 +21,8 @@ app.get('/', (req, res) => {
 app.get('/add', (req, res) => {
     return res.render('form')
 })
+
+//  add record
 
 app.post('/insertRecord', (req, res) => {
     //    console.log(req.body);
@@ -35,6 +37,7 @@ app.post('/insertRecord', (req, res) => {
     return res.redirect('/')
 })
 
+
 app.get('/DeletRecord', (req, res) => {
     let id = req.query.id;
     // console.log(id);
@@ -42,6 +45,8 @@ app.get('/DeletRecord', (req, res) => {
     Data = deletDataa;
     return res.redirect('/')
 })
+
+// for Edit id
 app.get('/EditRecord', (req, res) => {
     let editid = req.query.id
     // console.log(editid);
@@ -50,6 +55,7 @@ app.get('/EditRecord', (req, res) => {
         editData
     })
 })
+
 app.post('/UpdateRecord', (req, res) => {
     let eid = req.body.id;
     console.log(eid);
@@ -64,8 +70,6 @@ app.post('/UpdateRecord', (req, res) => {
         }
         return val;
     })
-
-
     Data = r;
     console.log(r);
     console.log("Update Successfully...");

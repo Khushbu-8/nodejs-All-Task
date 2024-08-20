@@ -5,18 +5,24 @@ const port = 5000;
 
 app.set('view engine','ejs');
 
-let allTask = [];
+const checkAge =(req,res,next) =>{
+    let age = req.query.age
+    if(!age || age < 18){
+        return res.redirect('/')
+    }
+    return next();
+}
+
+
 
 app.get('/',(req,res) =>{
-    return res.render('Add')
+    return res.render('index')
 })
-app.get('/View',(req,res) =>{
-    return res.render('View')
+app.get('/dash',checkAge,(req,res) =>{
+    return res.render('dashboard')
 })
-
-app.post("/createTask",(req,res)=>{
-    console.log(req.body.task);
- 
+app.get('/pro',(req,res) =>{
+    return res.render('product')
 })
 
 app.listen(port,(err)=>{
