@@ -10,7 +10,7 @@
 <div align="center">
     <h1>Add User</h1>
 
-    <form action="/insertUser" method="post">
+    <form action="/insertUser" method="post" enctype="multipart/form-data">
         <table border="1">
             <tr>
                 <td>Username:</td>
@@ -18,15 +18,53 @@
             </tr>
             <tr>
                 <td>UserEmail:</td>
-                <td><input type="text" name="email"></td>
+                <td><input type="email" name="email"></td>
+            </tr>
+            <tr>
+                <td>UserPassword:</td>
+                <td><input type="text" name="password"></td>
+            </tr>
+            <tr>
+                <td>Gender:</td>
+                <td>
+                    <input type="radio" name="gender" value="male" >Male
+                    <input type="radio" name="gender" value="female" >Female
+                </td>
+            </tr>
+            <tr>
+                <td>Hoby:</td>
+                <td>
+                    <input type="checkbox" name="hoby" value="cricket" >Cricket
+                    <input type="checkbox" name="hoby" value="hollyball" >HolluBall
+                    <input type="checkbox" name="hoby" value="drowing" >Drowing
+                    <input type="checkbox" name="hoby" value="playing" >Playing
+                </td>
+            </tr>
+            <tr>
+                <td>City:</td>
+                <td>
+                <select name="city">
+                    <option>--select city--
+                        <%city = ["Surat","Ahmdabad","Rajkot"]
+                        city.map((c) =>{%>
+                            <option value="<%= c %>"><%= c %></option>
+                       <% })%>
+                    </option>
+                </select>   
+                </td>
+            </tr>
+            <tr>
+                <td>File:</td>
+                <td><input type="file" name="image"></td>
             </tr>
             <tr>
                 <td></td>
                 <td><input type="submit"></td>
             </tr>
+
         </table>
     </form>
-    <a href="View">View</a>
+    <a href="/View">View</a>
 </div>
 </body>
 </html>

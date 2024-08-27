@@ -14,8 +14,33 @@
                 <th>Id</th>
                 <th>Name</th>
                 <th>Email</th>
+                <th>password</th>
+                <th>Gender</th>
+                <th>Hobby</th>
+                <th>City</th>
+                <th>Image</th>
+                <th>Action</th>
             </thead>
             <tbody>
+                <%record.map((val) =>{%>
+                    <tr>
+                        <td><%=val.id %></td>
+                        <td><%=val.name %></td>
+                        <td><%=val.email %></td>
+                        <td><%=val.password %></td>
+                        <td><%=val.gender %></td>
+                        <td><%=val.hoby %></td>
+                        <td><%=val.city %></td>
+                        <td>
+                            <img src="<%=val.image %>" alt="">
+                        </td>
+                        <td>
+                            <a href="/deletRecord?deletId=<%= val.id %>">Delete</a> ||
+                            <a href="/editRecord?editId=<%= val.id %>">Edit</a> 
+                        </td>
+
+                    </tr>
+                <%})%>
             </tbody>
         </table>
     <a href="/">Add</a>
