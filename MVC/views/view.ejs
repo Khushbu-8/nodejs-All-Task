@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Page</title>
+</head>
+<body>
+   <div align="center">
+    <div >
+        <h1>View page</h1>
+        <a href="crud/add"> Add</a>
+    </div>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Id  </th>
+                <th>Name </th>
+                <th>Phone </th>
+                <th>Action </th>
+            </tr>
+        </thead>
+        <tbody>
+            <% users.map((val,index) =>{%>
+                <tr>
+                    <td><%= ++index%></td>
+                    <td><%=val.name%></td>
+                    <td><%= val.phone%></td>
+                    <td>
+                        
+                        <a href="crud/deleteRecord?deletId=<%=val.id%>">Delete</a>||
+                        <a href="crud/editRecord?editId=<%=val.id%>">Edit</a> 
+                    </td>
+                </tr>
+            <%})%>
+        </tbody>
+    </table>
+   </div>
+</body>
+</html>
