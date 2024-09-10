@@ -7,6 +7,7 @@ const path = require('path')
 const ViewMovie = async(req,res) =>{
     try {
         const movies = await MovieModule.find();
+        
          return res.render('viewMovie',{
             movies
          })
@@ -45,9 +46,9 @@ const insertMovie = async(req,res) =>{
 const deleteMovie = async(req,res) =>{
     try {
         const deid = req.query.deletId;
-        let single = await MovieModule.findById(deid);
-        fs.unlinkSync(single.image);
-        // console.log(deid);
+        // let single = await MovieModule.findById(deid);
+        // fs.unlinkSync(single.image);
+        // // console.log(deid);
         await MovieModule.findByIdAndDelete(deid)
         console.log("Deleted..");
         return res.redirect('/')

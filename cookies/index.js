@@ -7,7 +7,25 @@ connectDB()
 app.set('view engine','ejs')
 app.use(express.urlencoded())
 
+const cookieParser = require('cookie-parser')
+app.use(cookieParser())
+
 app.use('/',require('./routes/indexRoutes'))
+
+app.get('/dash', (req, res) => {
+    return res.render("Viewblog")
+})
+
+
+app.get('/add', (req, res) => {
+    return res.render("Addblog")
+})
+
+app.get('/edit', (req, res) => {
+    return res.render("Editblog")
+})
+
+
 
 
 app.listen(port,(err) =>{
