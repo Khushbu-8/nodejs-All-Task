@@ -46,9 +46,9 @@ const insertMovie = async(req,res) =>{
 const deleteMovie = async(req,res) =>{
     try {
         const deid = req.query.deletId;
-        // let single = await MovieModule.findById(deid);
-        // fs.unlinkSync(single.image);
-        // // console.log(deid);
+        let single = await MovieModule.findById(deid);
+        fs.unlinkSync(single.image);
+        // console.log(deid);
         await MovieModule.findByIdAndDelete(deid)
         console.log("Deleted..");
         return res.redirect('/')
@@ -90,7 +90,6 @@ const UpdateMovie = async(req,res) =>{
                         return res.redirect('/')
         }else{
             const single = await MovieModule.findById(editid);
-            fs.unlinkSync(single.image);
             await MovieModule.findByIdAndUpdate(editid,{
                         name:name,
                         description:description,
