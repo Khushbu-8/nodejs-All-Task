@@ -85,7 +85,7 @@ const editProduct = async (req, res) => {
         const subcategory = await subcategoryModle.find({})
         const exsubcategory = await exsubcategoryModle.find({})
         const single = await productModle.findById(editid);
-        // console.log(single);
+        console.log(single);
 
         return res.render('product/edit_product', {
             single: single,
@@ -103,17 +103,50 @@ const editProduct = async (req, res) => {
 
 const updateProduct = async (req, res) => {
     try {
-        const { editid, category, subcategory, exsubcategory, product,} = req.body;
-        await productModle.findByIdAndUpdate(editid, {
-            categoryId: category,
-            subcategoryId: subcategory,
-            exsubcategory:exsubcategory,
-            product: product
-        })
+        const { editid, category, subcategory, exsubcategory, product,description,qnty,price} = req.body;
+        console.log(req.body);
+        
+        if (req.file) {
+            const single = await productModle.findById(editid);
+            fs.unlinkSync(single.image);
+            await productModle.findByIdAndUpdate(editid, {
+                categoryId: category,
+                subcategoryId: subcategory,
+                exsubcategoryId: exsubcategory,
+                product: product,
+                description: description,
+                qnty: qnty,
+                price: price,
+                image: req.file.path
+
+            })
+            console.log("Updated..");
+            return res.redirect('/product')
+        } else {
+            const single = await productModle.findById(editid);
+            await productModle.findByIdAndUpdate(editid, {
+                categoryId: category,
+                subcategoryId: subcategory,
+                exsubcategoryId: exsubcategory,
+                product: product,
+                description: description,
+                qnty: qnty,
+                price: price,
+                image: single.image
+
+            })
+            console.log("Updated..");
+            return res.redirect('/product')
+        }
+    
+        // await productModle.findByIdAndUpdate(editid, {
+        //     categoryId: category,
+        //     subcategoryId: subcategory,
+        //     exsubcategory:exsubcategory,
+        //     product: product
+        // })
         console.log('Product Updated...');
         return res.redirect('/product')
-        
-
 
     } catch (error) {
         console.log(error);

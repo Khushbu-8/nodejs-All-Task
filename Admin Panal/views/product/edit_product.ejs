@@ -43,7 +43,7 @@
                             </div>
                             <% } %>
 
-                                <form action="/product/updateProduct" method="post" class="form-horizontal">
+                                <form action="/product/updateProduct" method="post" class="form-horizontal" enctype="multipart/form-data">
                                     <div class="card-body">
                                         <h4 class="card-title">Edit Product</h4>
                                         <input type="text" value="<%= single.id%>" name="editid">
@@ -79,7 +79,7 @@
                                             <label for="fname"
                                                 class="col-sm-3 text-end control-label col-form-label">Subcategory</label>
                                             <div class="col-sm-9">
-                                                <select name="subcategory" class="form-control" id="fname">
+                                                <select name="exsubcategory" class="form-control" id="fname">
                                                     <option >---select Exubategory--</option>
                                                     <% exsubcategory.map((val) =>{%>
                                                         <option value="<%= val._id %>" <%= (single.exsubcategory === val._id) ? "selected" : '' %>>
@@ -132,10 +132,9 @@
 
                                             <div class="col-sm-9">
                                                 <input type="file" name="image"  class="form-control" />
+                                                <img src="../<%= single.image %>"   width="100" alt="image">
                                             </div>
-                                            <div class="col-sm-9">
-                                                <img src="<%= single.image %>" width="100" alt="">
-                                            </div>
+                                          
                                         </div>
 
                                     </div>
