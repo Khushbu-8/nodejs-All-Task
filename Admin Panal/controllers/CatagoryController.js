@@ -25,7 +25,9 @@ const insertCategory = async (req, res) => {
             category: category,
 
         })
-        console.log('Added Category...');
+        // console.log('Added Category...');
+        req.flash('success', "Category Add Successfully");
+           
         return res.redirect('/category')
 
 
@@ -46,6 +48,8 @@ const deletCatagory = async (req, res) => {
 
         await categoryModle.findByIdAndDelete(deleteid);
         console.log('Category Deleted...');
+        req.flash('success', "Category Deleted Successfully");
+      
         return res.redirect('/category')
 
     } catch (error) {
@@ -62,7 +66,7 @@ const editCatagory = async (req, res) => {
         return res.render('category/edit_category', {
             single
         })
-
+       
     } catch (error) {
         console.log(error);
         return false;

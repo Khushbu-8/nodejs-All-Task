@@ -17,7 +17,7 @@ const registerUser = async (req, res) => {
   const existingUser = await UserModel.findOne({ email });
 
   if (existingUser) {
-    console.log('User already exists');
+    req.flash('success', "User already exists");
     return false;
 //  return res.status(400).json({ error: 'User already exists' });
   }
@@ -27,8 +27,7 @@ const registerUser = async (req, res) => {
             password: password,
             cpassword: cpassword
         })
-        console.log("User Regisiter...");
-        
+        req.flash('success', "User successfully register");
         return res.redirect('/')
         
     } catch (err) {

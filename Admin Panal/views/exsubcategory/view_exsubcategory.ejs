@@ -59,10 +59,10 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <% exsubcategory.map((val) =>{%>
+                                        <% exsubcategory.map((val,i) =>{%>
                                           <tr>
                                               <td>
-                                                  <%= val.id %>
+                                                  <%= ++i %>
                                               </td>
                                               <td>
                                                   <%= val.categoryId.category %>

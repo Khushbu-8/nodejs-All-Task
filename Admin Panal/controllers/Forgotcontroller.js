@@ -107,6 +107,7 @@ const postNewPass = async (req, res) => {
             return res.redirect('/')
         } else {
             console.log("Password and Confirm Password are not same");
+            req.flash('success', "Password and Confirm Password are not same");
             return res.redirect('/forgot/newpass')
 
         }

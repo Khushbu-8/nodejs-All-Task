@@ -1,5 +1,5 @@
 const express = require('express');
-const { ViewProductpage, AddProductpage, insertproduct, deletProduct,statusChange, editProduct  } = require('../controllers/ProductController');
+const { ViewProductpage, AddProductpage, insertproduct, deletProduct,statusChange, editProduct, updateProduct  } = require('../controllers/ProductController');
 const path = require('path')
 
 const routes = express.Router();
@@ -23,7 +23,7 @@ routes.post('/inserproduct',fileUpload,insertproduct)
 routes.get('/deletProduct',deletProduct)
 routes.get('/statusChange',statusChange)
 routes.get('/editProduct',editProduct)
-// routes.post('/updateExsubcategory',updateExsubcategory)
+routes.post('/updateProduct',fileUpload,updateProduct)
 
 
 
