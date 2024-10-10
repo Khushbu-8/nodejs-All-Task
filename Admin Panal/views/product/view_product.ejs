@@ -99,8 +99,8 @@
                                                    class="btn text-white <%if (val.status == 'active'){%> btn-success<%}else{%> btn-danger<%}%>"><%=val.status %></a>
                                               </th>
                                               <th scope="row">
-                                                 <a href="/product/deletProduct?deleteId=<%= val.id %>" class="btn bg-danger text-white">Delete</a>
-                                                 <a href="/product/editProduct?editid=<%= val.id %> " class="btn bg-info text-white">Edit</a>
+                                                 <a href="/product/deletProduct?deleteId=<%= val.id %>" class="btn bg-danger text-white"><i class="fa fa-trash"></i></a>
+                                                 <a href="/product/editProduct?editid=<%= val.id %> " class="btn bg-info text-white"><i class="fa fa-edit"></i></a>
                                               </th>
   
                                           </tr>

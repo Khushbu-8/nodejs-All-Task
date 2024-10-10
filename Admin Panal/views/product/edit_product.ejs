@@ -7,7 +7,7 @@
         <div class="page-breadcrumb">
             <div class="row">
                 <div class="col-12 d-flex no-block align-items-center">
-                    <h4 class="page-title">Form Basic</h4>
+                    <h4 class="page-title">Form</h4>
                     <div class="ms-auto text-end">
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
@@ -35,14 +35,6 @@
                 <div class="col-md-6">
                     <div class="card">
 
-                        <% if(locals.success !="" ) { %>
-                            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                <%= locals.success %>
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                        aria-label="Close"></button>
-                            </div>
-                            <% } %>
-
                                 <form action="/product/updateProduct" method="post" class="form-horizontal" enctype="multipart/form-data">
                                     <div class="card-body">
                                         <h4 class="card-title">Edit Product</h4>
@@ -51,13 +43,11 @@
                                             <label for="fname"
                                                 class="col-sm-3 text-end control-label col-form-label">Category</label>
                                             <div class="col-sm-9">
-                                                <select name="category" class="form-control" id="fname">
+                                                <select name="category" onchange="categoryFilter()" id="categoryId" class="form-control" id="fname">
                                                     <option >---select Category--</option>
-                                                    <% category.map((cat) =>{%>
-                                                        <option value="<%= cat._id %>" <%= (single.categoryId === cat._id) ? "selected" : '' %>>
-                                                            <%= cat.category %>
-                                                        </option>
-                                                    <%})%>
+                                                    <% category.map((cate)=>{ %>
+                                                        <option <% if(cate.category == single.categoryId.category) { %> selected <% } %>value="<%= cate.id %>"><%= cate.category %></option>
+                                                      <% }) %>
                                                 </select>
                                             </div>
                                         </div>
@@ -65,13 +55,12 @@
                                             <label for="fname"
                                                 class="col-sm-3 text-end control-label col-form-label">Subcategory</label>
                                             <div class="col-sm-9">
-                                                <select name="subcategory" class="form-control" id="fname">
+                                               
+                                                <select name="subcategory" onchange="subcategoryFilter()" id="subcategoryId" class="form-control" id="fname">
                                                     <option >---select Subategory--</option>
                                                     <% subcategory.map((val) =>{%>
-                                                        <option value="<%= val._id %>" <%= (single.subcategoryId === val._id) ? "selected" : '' %>>
-                                                            <%= val.subcategory %>
-                                                        </option>
-                                                    <%})%>
+                                                        <option <% if(val.subcategory == single.subcategoryId.subcategory) { %> selected <% } %>value="<%= val.id %>"><%= val.subcategory %></option>
+                                                     <% }) %>
                                                 </select>
                                             </div>
                                         </div>
@@ -79,13 +68,11 @@
                                             <label for="fname"
                                                 class="col-sm-3 text-end control-label col-form-label">Subcategory</label>
                                             <div class="col-sm-9">
-                                                <select name="exsubcategory" class="form-control" id="fname">
+                                                <select name="exsubcategory" id="exsubcategoryId" class="form-control" id="fname">
                                                     <option >---select Exubategory--</option>
                                                     <% exsubcategory.map((val) =>{%>
-                                                        <option value="<%= val._id %>" <%= (single.exsubcategory === val._id) ? "selected" : '' %>>
-                                                            <%= val.exsubcategory %>
-                                                        </option>
-                                                    <%})%>
+                                                        <option <% if(val.exsubcategory == single.exsubcategoryId.exsubcategory) { %> selected <% } %>value="<%= val.id %>"><%= val.exsubcategory %></option>
+                                                     <% }) %>
                                                 </select>
                                             </div>
                                         </div>
@@ -169,5 +156,50 @@
         <!-- End footer -->
         <!-- ============================================================== -->
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  
+    <script type="text/javascript">
+        function categoryFilter() {
+          var id = document.getElementById('categoryId').value;
+          console.log(id);
+          
+          $.ajax({
+            url: `http://localhost:8000/product/categoryWiseFilter?id=${id}`,
+            type: 'GET',
+            dataType: 'json',
+            success: function (res) {
+              let record = res.category
+              // 
+              let tbl = "";
+              var ans = record.map((val) => {
+                tbl += `
+                        <option  value=${val._id}>${val.subcategory}</option>
+                       `
+              })
+              document.getElementById('subcategoryId').innerHTML = tbl; 
+            }
+          });
+        }
+      
+        function subcategoryFilter() {
+          var id = document.getElementById('subcategoryId').value; 
+          $.ajax({
+            url: `http://localhost:8000/product/subcategoryWiseFilter?id=${id}`,
+            type: 'GET',
+            dataType: 'json',
+            success: function (res) {
+              let record = res.subcategory
+              // 
+              let tbl = "";
+              var ans = record.map((val) => {
+                tbl += `
+                        <option  value=${val._id}>${val.exsubcategory}</option>
+                       `
+              })
+              document.getElementById('exsubcategoryId').innerHTML = tbl; 
+            }
+          });
+        }
+      </script>
 
     <%- include('../footer') %>

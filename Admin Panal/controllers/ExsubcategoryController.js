@@ -1,6 +1,7 @@
 const categoryModle = require('../models/CatagoryModle')
 const subcategoryModle = require('../models/SubCategoryModle')
-const exsubcategoryModle = require('../models/ExsubcategoryModle')
+const exsubcategoryModle = require('../models/ExsubcategoryModle');
+
 
 const ViewExsubcatagorypage = async (req, res) => {
     try {
@@ -75,8 +76,8 @@ const editExsubCatagory = async (req, res) => {
         editid = req.query.editid;
         // console.log(editid);
         const category = await categoryModle.find({})
-        const subcategory = await subcategoryModle.find({})
-        const single = await exsubcategoryModle.findById(editid);
+        const subcategory = await subcategoryModle.find({}).populate("categoryId")
+        const single = await exsubcategoryModle.findById(editid).populate("categoryId").populate("subcategoryId");;
         // console.log(single);
         
         return res.render('exsubcategory/edit_exsubcategory', {
@@ -136,6 +137,23 @@ const statusChange = async(req,res) =>{
         
     }
 }
+
+// Ajex fot filter categorywise
+const categoryWiseFilter = async(req,res) => {
+    try{
+        let id = req.query.id;
+        let subcat = await subcategoryModle.find({}).populate("categoryId");
+        let fil = subcat.filter((val)=>{
+            return val.categoryId.id == id;
+        })
+        return res.json({
+            category : fil
+        })
+    }catch(err){
+        console.log(err);
+        return false;
+    }
+}
 module.exports = {
-    ViewExsubcatagorypage,AddExsubatagorypage,insertExsubcategory,deletExsubCatagory,statusChange,editExsubCatagory,updateExsubcategory
+    ViewExsubcatagorypage,AddExsubatagorypage,insertExsubcategory,deletExsubCatagory,statusChange,editExsubCatagory,updateExsubcategory,categoryWiseFilter
 }

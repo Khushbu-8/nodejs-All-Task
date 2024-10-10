@@ -2,7 +2,6 @@ const express = require('express');
 
 const flash = require('connect-flash');
 
-
 const port = 8000;
 
 const app = express();
@@ -40,6 +39,11 @@ app.use(passport.setUser)
 
 app.use(express.urlencoded());
 
+app.use(flash());
+app.use(function(req,res,next){
+    res.locals.message = req.flash(); 
+    next();
+})
 
 app.use('/', require('./routes/indexRoute'));
 

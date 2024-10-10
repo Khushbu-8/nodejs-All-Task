@@ -76,7 +76,7 @@ const editSubCatagory = async (req, res) => {
         editid = req.query.subeditid;
         // console.log(editid);
         const category = await categoryModle.find({})
-        const single = await subcategoryModle.findById(editid);
+        const single = await subcategoryModle.findById(editid).populate("categoryId");
         // console.log(single);
         
         return res.render('subcategory/edit_subcategory', {

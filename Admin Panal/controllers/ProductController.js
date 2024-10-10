@@ -82,10 +82,10 @@ const editProduct = async (req, res) => {
         editid = req.query.editid;
         // console.log(editid);
         const category = await categoryModle.find({})
-        const subcategory = await subcategoryModle.find({})
-        const exsubcategory = await exsubcategoryModle.find({})
-        const single = await productModle.findById(editid);
-        console.log(single);
+        const subcategory = await subcategoryModle.find({}).populate("categoryId")
+        const exsubcategory = await exsubcategoryModle.find({}).populate("categoryId").populate("subcategoryId")
+        const single = await productModle.findById(editid).populate("categoryId").populate("subcategoryId").populate("exsubcategoryId");
+        // console.log(single)
 
         return res.render('product/edit_product', {
             single: single,
@@ -179,7 +179,37 @@ const statusChange = async (req, res) => {
 
     }
 }
-
+// Ajex fot filter categorywise
+const categoryWiseFilter = async(req,res) => {
+    try{
+        let id = req.query.id;
+        let subcat = await subcategoryModle.find({}).populate("categoryId");
+        let fil = subcat.filter((val)=>{
+            return val.categoryId.id == id;
+        })
+        return res.json({
+            category : fil
+        })
+    }catch(err){
+        console.log(err);
+        return false;
+    }
+}
+const subcategoryWiseFilter = async(req,res) => {
+    try{
+        let id = req.query.id;
+        let exsubcat = await exsubcategoryModle.find({}).populate('subcategoryId');
+        let fil = exsubcat.filter((val)=>{
+            return val.subcategoryId.id == id;
+        })
+        return res.json({
+            subcategory : fil
+        })
+    }catch(err){
+        console.log(err);
+        return false;
+    }
+}
 module.exports = {
-    ViewProductpage, AddProductpage, insertproduct, deletProduct, editProduct, statusChange, updateProduct
+    ViewProductpage, AddProductpage, insertproduct, deletProduct, editProduct, statusChange, updateProduct,categoryWiseFilter,subcategoryWiseFilter
 }

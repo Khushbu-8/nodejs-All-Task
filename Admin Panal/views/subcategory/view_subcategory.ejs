@@ -58,10 +58,10 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                      <% subcategory.map((sub) =>{%>
+                                      <% subcategory.map((sub,i) =>{%>
                                         <tr>
                                             <td>
-                                                <%= sub.id %>
+                                                <%= ++i %>
                                             </td>
                                             <td>
                                                 <%= sub.categoryId.category %>
