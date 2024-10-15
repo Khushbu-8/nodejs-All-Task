@@ -1,13 +1,11 @@
 const express = require('express');
-const { addUser, viewUser, deleteUser, updateUser, singleUser } = require('../controllers/AuthController');
+const { register, login } = require('../controllers/AuthController');
 
 const routes = express.Router();
+const {veryfyToken} = require('../middleware/Auth') 
 
-routes.post('/addUser',addUser);
-routes.get('/viewUser',viewUser);
-routes.delete('/deleteUser',deleteUser)
-routes.put('/updateUser',updateUser)
-routes.get('singleUser',singleUser)
+routes.post('/register',register);
+routes.post('/login',login);
 
 module.exports = routes
 

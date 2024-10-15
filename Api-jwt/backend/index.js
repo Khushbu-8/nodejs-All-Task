@@ -1,4 +1,5 @@
 const express = require("express");
+const cloudinary = require('cloudinary').v2
 const connectDB = require("./config/db");
 const app = express()
 const port = 8000;
@@ -11,7 +12,12 @@ app.use(express.json());
 
 app.set('view engine','ejs')
 app.use(express.urlencoded())
-
+  // Configuration
+  cloudinary.config({ 
+    cloud_name: 'dvlmfmhh0', 
+    api_key: '651819352999915', 
+    api_secret: '<your_api_secret>' // Click 'View API Keys' above to copy your API secret
+});
 
 app.use('/api/v1',require('./routes/indexRoutes'))
 

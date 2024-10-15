@@ -1,122 +1,79 @@
 
 const UserModel = require('../models/authModel')
+const jwt = require('jsonwebtoken')
 
-
-const addUser = async(req,res) =>{
+const register = async (req, res) => {
     try {
-        const {name,email,password} = req.body
+        const { name, email, password } = req.body
         // console.log(req.body);
-        if(!name ||email || !password){
+        if (!name || !email || !password) {
             return res.status(400).send({
-                success :false, 
-                message:"Please fill all the fields"})
+                success: false,
+                message: "Please fill all the fields"
+            })
 
         }
-        const user = await UserModel.findOne({email})
-        if(user){
+        const user = await UserModel.findOne({ email })
+        if (user) {
             return res.status(400).send({
-                success :false,
-                message:"Email already exists"})
+                success: false,
+                message: "Email already exists"
+            })
         }
         await UserModel.create({
-            name:name,
-            email:email,
-            password:password
+            name: name,
+            email: email,
+            password: password
         })
         res.status(200).send({
-            success :true,
-            message : "User Added Successfully"
-            
-        })  
+            success: true,
+            message: "User Added Successfully"
+
+        })
 
     } catch (error) {
         res.status(500).send({
-            success : false,
-            message : error
-            })
+            success: false,
+            message: error
+        })
 
-        
-    }
-}
-const viewUser = async(req,res) =>{
-    try {
-        const users = await UserModel.find({});
-        // console.log(users); 
-      return  res.status(200).send({
-            success : true,
-            message : "Users Fetched Successfully",
-            users
-            }
-        )
-        // console.log(users);
-        
-        
-    } catch (error) {
-        res.status(500).send({
-            success : false,
-            message : error
-            })
-        
-    }
 
-}
-const deleteUser = async(req,res)  =>{
-    try {
-        const deid = req.query.deleteid;
-         await UserModel.findByIdAndDelete(deid);
-        return res.status(200).send({
-            success : true,
-            message : "User Deleted Successfully"
-            })
-        
-    } catch (error) {
-      return  res.status(500).send({
-            success : false,
-            message : error
-            })
     }
 }
-// for single record
-const singleUser = async(req,res) =>{
+const login = async (req, res) => {
     try {
-      let user = await UserModel.findById(req.query.id)
-      
-            return res.status(200).send({
-                success : true,
-                message : "User Fetched Successfully",
-                user
+        const { email, password } = req.body
+        
+        if (!email || !password) {
+            return res.status(400).send({
+                success: false,
+                message: "Please fill all the fields"
+            })
+        }
+        const user = await UserModel.findOne({ email : email })
+        if (!user || user.password!=password) {
+            return res.status(400).send({
+                success: false,
+                message: "Invalid Email or Password"
+            })
+        }
+        const token = await jwt.sign({ user: user }, "secret-key",
+            {
+                expiresIn: '1h'
                 }
-                )
-    } catch (error) {
-        res.status(500).send({
-            success : false,
-            message : error
-            })
-    }
+                );
+                res.status(200).send({
+                    success: true,
+                    message: "token is hear",
+                    token: token
+                    })
 
+    } catch (error) {
+        console.log(error);
+        return false;
+    }
 }
 
-const updateUser = async(req,res) =>{
-    try {
-        const {id,name,email,password} = req.body;
-        await UserModel.findByIdAndUpdate(id,{
-            name : name,
-            email : email,
-            password : password
-        })
-        return res.status(200).send({
-            success : true,
-            message : "User Updated Successfully",
-            
-        })
-    } catch (error) {
-        return res.status(500).send({
-            success : false,
-            message : error
-            })
-    }
-
-}
 module.exports = {
-    addUser,viewUser,deleteUser,updateUser,singleUser
+    register, login
 }
