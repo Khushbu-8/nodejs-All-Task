@@ -3,9 +3,13 @@ const mongoose = require('mongoose');
 const productSchema = mongoose.Schema({
     categoryId :{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Category'
+        ref: 'category'
     },
-    name : {
+    subcategoryId :{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'subcategory'
+    },
+    product : {
         type : String,
         required : true
     },
@@ -21,10 +25,13 @@ const productSchema = mongoose.Schema({
         type : String,
         required : true
     },
-    // image : {
-    //     type : String,
+    // image :{
+    //     type : String,  
     //     required : true
-
+    // }, 
+    // public_id: {
+    //     type: String,
+    //     required: true,
     // }
 })
 const product = mongoose.model('product', productSchema);

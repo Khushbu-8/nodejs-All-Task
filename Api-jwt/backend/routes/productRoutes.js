@@ -1,11 +1,17 @@
 const express = require('express');
-const { addproduct, viewproduct } = require('../controllers/ProductController');
+const { addproduct, viewproduct, deleteproduct } = require('../controllers/ProductController');
 
 const routes = express.Router();
+const multer = require('multer');
 
-routes.post('/addProduct',addproduct)
-routes.get('/viewProduct',viewproduct)
+const storege = multer.diskStorage({});
 
+const fileUpload = multer({ storage: storege }).single("image");
+
+
+routes.post('/addproduct',fileUpload,addproduct)
+routes.get('/viewproduct',viewproduct)
+routes.delete('/deleteproduct',deleteproduct)
 
 module.exports = routes
 
