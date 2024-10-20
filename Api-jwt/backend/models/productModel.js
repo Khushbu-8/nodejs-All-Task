@@ -25,14 +25,14 @@ const productSchema = mongoose.Schema({
         type : String,
         required : true
     },
-    // image :{
-    //     type : String,  
-    //     required : true
-    // }, 
-    // public_id: {
-    //     type: String,
-    //     required: true,
-    // }
+    image :{
+        type : String,  
+        required : true
+    }, 
+    public_id: {
+        type: String,
+        required: true,
+    }
 })
 const product = mongoose.model('product', productSchema);
 module.exports = product
