@@ -1,6 +1,4 @@
-
 const UserModel = require('../models/authModel')
-
 
 const addUser = async(req,res) =>{
     try {
@@ -13,17 +11,13 @@ const addUser = async(req,res) =>{
         })
         res.status(200).send({
             success :true,
-            message : "User Added Successfully"
-            
+            message : "User Added Successfully"     
         })  
-
     } catch (error) {
         res.status(500).send({
             success : false,
             message : error
             })
-
-        
     }
 }
 const viewUser = async(req,res) =>{
@@ -81,7 +75,6 @@ const singleUser = async(req,res) =>{
             message : error
             })
     }
-
 }
 
 const updateUser = async(req,res) =>{

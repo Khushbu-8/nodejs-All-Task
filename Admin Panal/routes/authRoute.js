@@ -9,6 +9,6 @@ routes.get('/', loginPage);
 routes.get('/register', registerPage);
 routes.post('/registerUser', registerUser);
 routes.post('/loginUser',passport.authenticate('local',{failureRedirect : '/'}) ,loginUser)
-routes.get('/dashboard',passport.checkUser,dashboardPage)
+routes.get('/dashboard',dashboardPage)
 
 module.exports = routes;

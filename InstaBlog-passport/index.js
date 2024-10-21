@@ -6,18 +6,15 @@ connectDB()
 
 app.set('view engine','ejs')
 const path = require('path');
-
+app.use(express.urlencoded());
+app.use(express.json());
 
 const cookieParser = require('cookie-parser')
 app.use(cookieParser());
 
-app.use(express.static(path.join(__dirname, 'public')))
-
-
-app.use(express.urlencoded());
-app.use(express.json());
-
+// static file 
 app.use('/uploads',express.static(path.join(__dirname,"uploads")));
+app.use(express.static(path.join(__dirname, 'public')))
 
 // attechment of passport
 const passport = require('passport');
